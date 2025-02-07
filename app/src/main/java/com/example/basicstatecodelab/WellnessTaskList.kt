@@ -5,15 +5,15 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 
 @Composable
 fun WellnessTasksList(
+    list: List<WellnessTask>,
+    onCloseTask: (WellnessTask) -> Unit,
     modifier: Modifier = Modifier,
-    list: List<WellnessTask> = remember { getWellnessTasks() },
 ) {
     LazyColumn(
         modifier = modifier
@@ -24,10 +24,8 @@ fun WellnessTasksList(
                 taskName = task.label,
                 checked = checkedState,
                 onCheckedChange = { newValue -> checkedState = newValue },
-                onClose = {} // 今は空のラムダ
+                onClose = {onCloseTask(task)}
             )
         }
     }
 }
-
-fun getWellnessTasks() = List(30) { i -> WellnessTask(i, "Task # $i") }
